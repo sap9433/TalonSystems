@@ -22,25 +22,32 @@
         </h1>
         <div class="mui-container-fluid">
             <div class="store">
-                <form class="mui-form" action="/api/savedata" method="POST">
+                <form class="mui-form" id="savedataform">
                     <legend>Save data</legend>
                     <div class="mui-textfield">
-                    <input type="text" placeholder="key">
+                    <input name="key" type="text" placeholder="key">
                     </div>
                     <div class="mui-textfield">
-                    <input type="text" placeholder="value">
+                    <input name="value" type="text" placeholder="value">
                     </div>
-                    <input type="hidden" id="clientid" name="clientid" value="3487">
-                    <button type="submit" class="mui-btn mui-btn--raised">Submit</button>
+                    <button id="savedata" class="mui-btn mui-btn--raised">Submit</button>
                 </form>
             </div>
             <div class="retrieve">
-            <form class="mui-form" action="/api/retrievedata" method="POST">
+            <form class="mui-form" id="retrievedataform">
                 <legend>Retrieve data</legend>
                 <div class="mui-textfield">
-                  <input type="text" placeholder="key">
+                  <input name="key" type="text" placeholder="key">
                 </div>
-                <button type="submit" class="mui-btn mui-btn--raised">Submit</button>
+                <div class="mui-select">
+                    <select name="clientId">
+                        <option value="client1">client1</option>
+                        <option value="client2">client2</option>
+                        <option value="client3">Client3</option>
+                    </select>
+                    <label>Select Same Client as earlier</label>
+                </div>
+                <button id="retrievedata" class="mui-btn mui-btn--raised">Submit</button>
             </form>
             </div>
           </div>
