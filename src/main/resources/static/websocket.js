@@ -6,7 +6,6 @@ function connect() {
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
-        debugger
         stompClient.subscribe('/topic/backToClient/'+clientid, function (transcript) {
             showResult(transcript.body);
         });
@@ -14,7 +13,6 @@ function connect() {
 }
 
 function showResult(message) {
-    debugger
     $("#queryresult").append("<tr><td>" + message + "</td></tr>");
 }
 
