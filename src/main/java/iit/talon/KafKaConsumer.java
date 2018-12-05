@@ -40,17 +40,17 @@ public class KafKaConsumer {
     public void retrieveValue(String message) throws FileNotFoundException, IOException{
         String data[] = dataDeserializer(message);
         BufferedInputStream reader1 = new BufferedInputStream(new FileInputStream(diskpath+"/"+data[1]) );
-        // BufferedInputStream reader2 = new BufferedInputStream(new FileInputStream(machine1+"/"+data[1]) );
-        // BufferedInputStream reader3 = new BufferedInputStream(new FileInputStream(machine2+"/"+data[1]) );
+        BufferedInputStream reader2 = new BufferedInputStream(new FileInputStream(machine1+"/"+data[1]) );
+        BufferedInputStream reader3 = new BufferedInputStream(new FileInputStream(machine2+"/"+data[1]) );
         boolean running = true;
         while( running ) {
-            //if( reader1.available() > 0 && reader2.available() > 0 && reader3.available() > 0) {
-            if( reader1.available() > 0 ) {
+            if( reader1.available() > 0 && reader2.available() > 0 && reader3.available() > 0) {
+            //if( reader1.available() > 0 ) {
                 String val1 = IOUtils.toString(reader1, "UTF-8");
-                // String val2 = IOUtils.toString(reader2, "UTF-8");
-                // String val3 = IOUtils.toString(reader3, "UTF-8");
-                //if(val1.equals(val2) && val2.equals(val3)){
-                if(val1.equals(val1)){
+                String val2 = IOUtils.toString(reader2, "UTF-8");
+                String val3 = IOUtils.toString(reader3, "UTF-8");
+                if(val1.equals(val2) && val2.equals(val3)){
+                //if(val1.equals(val1)){
                     webSocket.convertAndSend("/topic/backToClient/"+data[0], val1);
                     running = false;
                 } else {
