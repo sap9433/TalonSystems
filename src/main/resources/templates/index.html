@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script type="text/javascript" th:src="@{/websocket.js}"></script>
+    <link href="//cdn.muicss.com/mui-0.9.41/css/mui.min.css" rel="stylesheet" type="text/css" />
+    <script src="//cdn.muicss.com/mui-0.9.41/js/mui.min.js"></script>
+    <title>Saptarshi , Vishant</title>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="header">
+            TalonStore: A Multi Master replication Strategy
+        </h1>
+        <div class="mui-container-fluid recordPanel">
+            <form class="mui-form" action="/api/savedata" method="POST">
+                <legend>Save data</legend>
+                <div class="mui-textfield">
+                  <input type="text" placeholder="key">
+                </div>
+                <div class="mui-textfield">
+                  <input type="text" placeholder="value">
+                </div>
+                <input type="hidden" id="clientid" name="clientid" value="3487">
+                <button type="submit" class="mui-btn mui-btn--raised">Submit</button>
+              </form>
+
+              <form class="mui-form" action="/api/retrievedata" method="POST">
+                <legend>Retrieve data</legend>
+                <div class="mui-textfield">
+                  <input type="text" placeholder="key">
+                </div>
+                <button type="submit" class="mui-btn mui-btn--raised">Submit</button>
+              </form>
+          </div>
+    </div>
+    <div id="main-content" class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <table id="conversation" class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Query Result</th>
+                    </tr>
+                    </thead>
+                    <tbody id="queryresult">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- include javascript in the footer -->
+</body>
+</html>

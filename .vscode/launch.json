@@ -23,6 +23,7 @@
             "stopOnEntry": false,
             "mainClass": "iit.talon.TalonApplication",
             "args": "",
+            "vmArgs": "-Dspring.profiles.active=node2",
             "projectName": "talon"
         },
         {
