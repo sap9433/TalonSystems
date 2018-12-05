@@ -1,0 +1,24 @@
+.store, .result, .retrieve{
+    padding: 10px;
+    width: 50%;
+    border: 1px solid #eae1e1;
+    border-radius: 10px;
+}
+
+.result{
+    margin: 10px;
+    margin-left: 450px;
+}
+
+.retrieve{
+    position: absolute;
+    top: 72px;
+    right: 50px;
+    width: 40%;
+}
+
+.header{
+    text-align: center;
+    font-size: 25px;
+    color: #6363bb;
+}

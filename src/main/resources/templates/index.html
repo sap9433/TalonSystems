@@ -11,6 +11,7 @@
     <script type="text/javascript" th:src="@{/websocket.js}"></script>
     <link href="//cdn.muicss.com/mui-0.9.41/css/mui.min.css" rel="stylesheet" type="text/css" />
     <script src="//cdn.muicss.com/mui-0.9.41/js/mui.min.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{app.css}"/>
     <title>Saptarshi , Vishant</title>
 </head>
 <body>
@@ -19,29 +20,32 @@
         <h1 class="header">
             TalonStore: A Multi Master replication Strategy
         </h1>
-        <div class="mui-container-fluid recordPanel">
-            <form class="mui-form" action="/api/savedata" method="POST">
-                <legend>Save data</legend>
-                <div class="mui-textfield">
-                  <input type="text" placeholder="key">
-                </div>
-                <div class="mui-textfield">
-                  <input type="text" placeholder="value">
-                </div>
-                <input type="hidden" id="clientid" name="clientid" value="3487">
-                <button type="submit" class="mui-btn mui-btn--raised">Submit</button>
-              </form>
-
-              <form class="mui-form" action="/api/retrievedata" method="POST">
+        <div class="mui-container-fluid">
+            <div class="store">
+                <form class="mui-form" action="/api/savedata" method="POST">
+                    <legend>Save data</legend>
+                    <div class="mui-textfield">
+                    <input type="text" placeholder="key">
+                    </div>
+                    <div class="mui-textfield">
+                    <input type="text" placeholder="value">
+                    </div>
+                    <input type="hidden" id="clientid" name="clientid" value="3487">
+                    <button type="submit" class="mui-btn mui-btn--raised">Submit</button>
+                </form>
+            </div>
+            <div class="retrieve">
+            <form class="mui-form" action="/api/retrievedata" method="POST">
                 <legend>Retrieve data</legend>
                 <div class="mui-textfield">
                   <input type="text" placeholder="key">
                 </div>
                 <button type="submit" class="mui-btn mui-btn--raised">Submit</button>
-              </form>
+            </form>
+            </div>
           </div>
     </div>
-    <div id="main-content" class="container">
+    <div id="main-content" class="container result">
         <div class="row">
             <div class="col-md-12">
                 <table id="conversation" class="table table-striped">
