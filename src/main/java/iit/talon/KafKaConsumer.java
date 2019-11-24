@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -28,7 +29,7 @@ public class KafKaConsumer {
     private String diskpath;
     @Value("${otherMachinepath1.property}")
     private String machine1;
-    @Value("${otherMachinepath1.property}")
+    @Value("${otherMachinepath2.property}")
     private String machine2;
 
     private String[] dataDeserializer(String message) {
@@ -70,18 +71,29 @@ public class KafKaConsumer {
         logger.info(message);
     }
 
-    @KafkaListener(topics = "savedata", groupId = "${diskpath.property}")
+    @KafkaListener(topics = "savedata")
+    @Transactional
     public void saveDataToDisk(String message) throws IOException{
         String data[] = dataDeserializer(message);
-        File file = new File(diskpath+"/"+data[0]);
-        file.getParentFile().mkdirs();
-        FileWriter writer = new FileWriter(file);
+        File file1 = new File(diskpath+"/"+data[0]);
+        File file2 = new File(machine1+"/"+data[0]);
+        File file3 = new File(machine2+"/"+data[0]);
+        file1.getParentFile().mkdirs();
+        file2.getParentFile().mkdirs();
+        file3.getParentFile().mkdirs();
+        FileWriter writer1 = new FileWriter(file1);
+        FileWriter writer2 = new FileWriter(file2);
+        FileWriter writer3 = new FileWriter(file3);
         try {
-            writer.write(data[1]);
+            writer1.write(data[1]);
+            writer2.write(data[1]);
+            writer3.write(data[1]);
         } catch(Exception e){
             logger.info(e.getMessage());
         }finally{
-            writer.close();
+            writer1.close();
+            writer2.close();
+            writer3.close();
         }
         logger.info(message);
     }
