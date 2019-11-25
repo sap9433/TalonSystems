@@ -8,20 +8,17 @@ window.setTimeout(function selectElement() {
  }, 500);
 
 function showResult(message) {
-    $("#queryresult").append("<tr><td>" + message + "</td></tr>");
+    $("#resultspace").text(message);
 }
 
 $(function () {
     $("form").on('submit', function (e) {
         e.preventDefault();
     });
-    $( "#savedata" ).click(function() { submitdata(); });
-    $( "#retrievedata" ).click(function() { retrievedata(); });
+    $("#savedata" ).click(function() { submitdata(); });
+    $("#retrievedata" ).click(function() { retrievedata(); });
 });
 
-function showTranscript(message) {
-    $("#queryresult").html("<tr><td>" + message + "</td></tr>");
-}
 
 function submitdata (){
     $.ajax({
@@ -45,20 +42,18 @@ function retrievedata (){
 
 function responseStream () {
 
-    this.source = null;
+    try{
+        this.source.stop();
+    }catch(e){}
 
     this.start = function () {
 
         this.source = new EventSource(retriveapi+"&key="+searchkey);
 
         //before just message
-        this.source.addEventListener('/topic/backToClient/'+clientid, function (event) {
+        this.source.addEventListener('/topic/backToClient/'+clientid+searchkey, function (event) {
            showResult(event.data);
         });
-
-        this.source.onmessage = function (message) {
-                   showResult(message);
-         };
 
         this.source.onerror = function () {
             this.close();

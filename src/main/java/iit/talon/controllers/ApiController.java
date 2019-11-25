@@ -54,12 +54,17 @@ public class ApiController {
         sseMvcExecutor.execute(() -> {
             try {
                 for (int i = 0; true; i++) {
-                    BufferedInputStream reader1 = new BufferedInputStream(new FileInputStream(diskpath+"/"+key) );
-                    String val1 = IOUtils.toString(reader1, "UTF-8");
+                    String val1 = "null";
+                    try {
+                        BufferedInputStream reader1 = new BufferedInputStream(new FileInputStream(diskpath + "/" + key));
+                        val1 = IOUtils.toString(reader1, "UTF-8");
+                    }catch (Exception e){
+
+                    }
                     SseEmitter.SseEventBuilder event = SseEmitter.event()
                             .data(val1)
                             .id(String.valueOf(i))
-                            .name("/topic/backToClient/"+clientId);
+                            .name("/topic/backToClient/"+clientId+key);
                     emitter.send(event);
                     Thread.sleep(1000);
                 }
