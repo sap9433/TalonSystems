@@ -15,6 +15,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 @Component
@@ -36,28 +39,20 @@ public class KafKaConsumer {
 
     @KafkaListener(topics = "savedata")
     @Transactional
-    public void saveDataToDisk(String message) throws IOException{
+    public void saveDataToDisk(String message) {
         String data[] = dataDeserializer(message);
-        File file1 = new File(diskpath+"/"+data[0]);
-        File file2 = new File(machine1+"/"+data[0]);
-        File file3 = new File(machine2+"/"+data[0]);
-        file1.getParentFile().mkdirs();
-        file2.getParentFile().mkdirs();
-        file3.getParentFile().mkdirs();
-        FileWriter writer1 = new FileWriter(file1);
-        FileWriter writer2 = new FileWriter(file2);
-        FileWriter writer3 = new FileWriter(file3);
-        try {
-            writer1.write(data[1]);
-            writer2.write(data[1]);
-            writer3.write(data[1]);
-        } catch(Exception e){
-            logger.info(e.getMessage());
-        }finally{
-            writer1.close();
-            writer2.close();
-            writer3.close();
-        }
-        logger.info(message);
+        List<String> servers = new ArrayList (Arrays.asList(diskpath, machine1, machine2));
+        servers.parallelStream().forEach((server) -> {
+            File file1 = new File(server+"/"+data[0]);
+            file1.getParentFile().mkdirs();
+            FileWriter writer1 = null;
+            try {
+                writer1 = new FileWriter(file1);
+                writer1.write(data[1]);
+                writer1.close();
+            }catch(Exception e){
+                logger.info(e.getMessage());
+            }
+        });
     }
 }

@@ -1,6 +1,7 @@
 var clientid = prompt("Please enter client id", "client1");
 var retriveapi = '/api/retrievedata?clientid='+clientid;
 var searchkey = null;
+var rstream = null;
 
 window.setTimeout(function selectElement() {
      let element = document.getElementById("retrieveveid");
@@ -34,18 +35,16 @@ function submitdata (){
 
 function retrievedata (){
     searchkey = $('#searchkey').val();
-    var rstream = new responseStream();
+    try{
+        rstream.stop();
+    }catch(e){}
+    rstream = new responseStream();
     rstream.start();
 }
 
 //### New ###
 
 function responseStream () {
-
-    try{
-        this.source.stop();
-    }catch(e){}
-
     this.start = function () {
 
         this.source = new EventSource(retriveapi+"&key="+searchkey);
